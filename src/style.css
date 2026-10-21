@@ -51,7 +51,7 @@ p {
 }
 
 input {
-  height: 48px;
+  height: 32px;
   border: none;
   border-bottom: 1px solid var(--border-color);
   outline: none;
@@ -138,6 +138,19 @@ textarea {
   margin: 16px;
 }
 
+.margin-top-16 {
+  margin-top: 16px;
+}
+.margin-top-48 {
+  margin-top: 48px;
+}
+
+.margin-bottom-16 {
+  margin-bottom: 16px;
+}
+.margin-bottom-24 {
+  margin-bottom: 24px;
+}
 .padding-24 {
   padding: 24px;
 }
