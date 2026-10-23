@@ -14,8 +14,17 @@ function getPath() {
   return location.hash.slice(1) || "/";
 }
 
+// function render() {
+//   const view = routes[getPath()] ?? routes["/login"];
+//   view(appContainer);
+// }
+
 function render() {
-  const view = routes[getPath()] ?? routes["/login"];
+  const view = routes[getPath()];
+  if (!view) {
+    location.replace("#/login");
+    return;
+  }
   view(appContainer);
 }
 

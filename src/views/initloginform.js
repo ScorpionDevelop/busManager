@@ -5,37 +5,61 @@ Anpassen von:
  <a class="link-sec invisible" href="#">Passwort vergessen?</a>
 umbau auf Button und dann eigene Route setzen und Formular entwerfen + Logik für Supabase einbauen
 
+Supabase hängt bei Passwort-Reset-Links eigene Tokens als Hash an die URL. Diese Route 
+musst du dann gezielt behandeln, damit der Router sie nicht als unbekannte Route auf /login umleitet.
+
  */
 //use strict wird der vollständigkeit halber gesetzt, auch wenn Module autom. im Strict-Mode laufen
 
 "use strict";
 
+import { supabase } from "../supabaseClient";
+
 export function initloginForm(appContainer) {
   appContainer.innerHTML = `<h1 class="text-center margin-top-48">Bus-Manager</h1>
-      <div class="main">
+      <main class="main">
         <div class="login rounded-8 padding-24 disp-flex flex-column">
           <h2 class="width-100 text-center">Login</h2>
-          <form class="login-form disp-flex flex-column" action="">
+          <form class="login-form disp-flex flex-column" >
             <label class="width-100" for="usermail">E-Mail</label>
-            <input class=" margin-bottom-24" type="email" name="mail" id="usermail" placeholder="Hier Emailadresse eingeben" autocomplete="email" required />
+            <input class=" margin-bottom-24" type="email" name="mail" id="usermail"  placeholder="Hier Emailadresse eingeben" autocomplete="email" required />
             <label for="password">Passwort</label>
-            <input class="margin-bottom-24" type="password" name="passwort" id="password" placeholder="Passwort" autocomplete="current-password" required />
+            <input class="margin-bottom-24" type="password" name="passwort" id="password" placeholder="Passwort"  autocomplete="current-password" required />
             <a class="link-sec invisible" href="#">Passwort vergessen?</a>
+            <p class="form-message" role="alert"></p>
             <button class="button-custom1" type="submit">Login</button>
-            <button id= "initCreateAccountForm" class="button-custom2" type="button">Noch keinen Account?</button>
+            <button id= "toRegisterButton" class="button-custom2" type="button">Noch keinen Account?</button>
             
           </form>
          </div>
-      </div>
+      </main>
       `;
 
-  document.getElementById("initCreateAccountForm").addEventListener("click", () => {
+  document.getElementById("toRegisterButton").addEventListener("click", () => {
     location.hash = "/register";
   });
 
-  document.querySelector(".login-form").addEventListener("submit", (e) => {
+  document.querySelector(".login-form").addEventListener("submit", async (e) => {
     e.preventDefault();
-    // Login-Logik (Supabase)
+    const form = e.target;
+    const button = form.querySelector('button[type="submit"]');
+    const message = form.querySelector(".form-message");
+
+    const email = form.mail.value.trim();
+    const password = form.passwort.value;
+
+    button.disabled = true;
+    message.textContent = "";
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      message.textContent = "E-Mail oder Passwort falsch.";
+      button.disabled = false;
+      return;
+    }
+
+    location.hash = "/loggedIn";
   });
 }
 
