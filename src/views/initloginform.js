@@ -1,48 +1,43 @@
+// initloginform.js
+
+/*TODO
+Anpassen von:
+ <a class="link-sec invisible" href="#">Passwort vergessen?</a>
+umbau auf Button und dann eigene Route setzen und Formular entwerfen + Logik für Supabase einbauen
+
+ */
+//use strict wird der vollständigkeit halber gesetzt, auch wenn Module autom. im Strict-Mode laufen
+
 "use strict";
 
-const appContainer = document.getElementById("app");
-
-function showloginForm1() {
+export function initloginForm(appContainer) {
   appContainer.innerHTML = `<h1 class="text-center margin-top-48">Bus-Manager</h1>
       <div class="main">
         <div class="login rounded-8 padding-24 disp-flex flex-column">
           <h2 class="width-100 text-center">Login</h2>
           <form class="login-form disp-flex flex-column" action="">
             <label class="width-100" for="usermail">E-Mail</label>
-            <input class=" margin-bottom-24" type="email" name="mail" id="usermail" placeholder="Hier Emailadresse eingeben" required />
+            <input class=" margin-bottom-24" type="email" name="mail" id="usermail" placeholder="Hier Emailadresse eingeben" autocomplete="email" required />
             <label for="password">Passwort</label>
-            <input class="margin-bottom-24" type="password" name="passwort" id="password" placeholder="Passwort" required />
+            <input class="margin-bottom-24" type="password" name="passwort" id="password" placeholder="Passwort" autocomplete="current-password" required />
             <a class="link-sec invisible" href="#">Passwort vergessen?</a>
             <button class="button-custom1" type="submit">Login</button>
-            
-          </form>
-          <p class="">Noch keinen Account? <a class="link-pri" href="">Account anlegen</a></p>
-        </div>
-      </div>
-      `;
-}
-
-function showloginForm() {
-  appContainer.innerHTML = `<h1 class="text-center margin-top-48">Bus-Manager</h1>
-      <div class="main">
-        <div class="login rounded-8 padding-24 disp-flex flex-column">
-          <h2 class="width-100 text-center">Login</h2>
-          <form class="login-form disp-flex flex-column" action="">
-            <label class="width-100" for="usermail">E-Mail</label>
-            <input class=" margin-bottom-24" type="email" name="mail" id="usermail" placeholder="Hier Emailadresse eingeben" required />
-            <label for="password">Passwort</label>
-            <input class="margin-bottom-24" type="password" name="passwort" id="password" placeholder="Passwort" required />
-            <a class="link-sec invisible" href="#">Passwort vergessen?</a>
-            <button class="button-custom1" type="submit">Login</button>
-            <button class="button-custom2" type="submit">Noch keinen Account</button>
+            <button id= "initCreateAccountForm" class="button-custom2" type="button">Noch keinen Account?</button>
             
           </form>
          </div>
       </div>
       `;
-}
 
-showloginForm();
+  document.getElementById("initCreateAccountForm").addEventListener("click", () => {
+    location.hash = "/register";
+  });
+
+  document.querySelector(".login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    // Login-Logik (Supabase)
+  });
+}
 
 /*
 import { createClient } from "https://esm.sh/@supabase/supabase-js";

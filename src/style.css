@@ -15,8 +15,8 @@
 
   /* Buttons */
   --button-primary: rgb(233 16 16);
-
   --button-primary-hover: rgba(233, 16, 16, 0.5);
+  --button-secondary: rgb(250 250 250);
 
   /* Rahmen */
   --border-color: rgb(218, 220, 224);
@@ -110,15 +110,17 @@ a {
 
 .button-custom2 {
   display: block;
-  background-color: var(--button-primary);
-  color: rgb(255, 255, 255);
-  border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
-  cursor: pointer;
   width: 100%;
+  background-color: var(--button-secondary);
+  color: var(--text-link-primary);
   font-size: 1.2rem;
+  cursor: pointer;
   margin-bottom: 8px;
+  border-color: var(--button-secondary);
+  border-style: solid;
+  border-radius: 6px;
+  border: 1px solid;
+  padding: 10px 16px;
 }
 
 input,
